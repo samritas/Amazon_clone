@@ -21,15 +21,18 @@ function Header() {
             {/* </div> */}
             
         </div>
-        <dev className='header_nav'>
-            <dev className='header_opetion' >
+        <div className='header_nav'>
+           <Link to="/Login">
+            <div className='header_opetion' >
                  <span className='headerOpetionLineone' >HelloGuest</span>
                  <span className='headerOpetionLineone' >sign in</span>
-            </dev>
-            <dev className='header_opetion' >
+            
+            </div>
+            </Link>
+            <div className='header_opetion' >
                  <span className='headerOpetionLineone' >Return</span>
                  <span className='headerOpetionLineone' >&Order</span>
-            </dev>
+            </div>
             <dev className='header_opetion' >
                  <span className='headerOpetionLineone' >Your</span>
                  <span className='headerOpetionLineone' >Prime</span>
@@ -42,7 +45,7 @@ function Header() {
             </dev>
             </Link>
 
-        </dev>
+        </div>
       
     </div>
   )
