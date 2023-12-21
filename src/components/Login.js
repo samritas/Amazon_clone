@@ -1,21 +1,41 @@
 import React,{useState} from 'react'
 import './Login.css'
-import { Link } from 'react-router-dom'
-// import { auth } from "./firebase";
+import { Link,Navigate,useNavigate } from 'react-router-dom'
+import {auth} from './firebase'
+import { signInWithEmailAndPassword,createUserWithEmailAndPassword } from 'firebase/auth'
 function Login() {
     const [email,setEmail]=useState("")
     const [password,setPassword]=useState("")
+    const navigate=useNavigate()
     const signin=(e)=>{
         e.preventDefault();
+        signInWithEmailAndPassword(auth,email, password)
+        .then((userCredential) => {
+            navigate("/")
+            
+           })
+        .catch((error) => {
+           alert(error.message);
+          }); 
+          
     }
-    const register=(e)=>{
-        e.preventDefault();
-        // 
-        // .createUserWithEmailAndPassword(email, password)
-        // .then((userCredential) => {
-        //   console.log(userCredential);
-        // })
-    }
+    const register = (e) => {
+      e.preventDefault();
+    
+      if (email === '') {
+        // Handle the case when the email is missing or empty
+        console.log('Email is required');
+        return;
+      }
+    
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          navigate("/")
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    };
   return (
     <div className="container">
         <Link to="/">
@@ -26,7 +46,7 @@ function Login() {
     <form>
       <div className="form-group">
         <label htmlFor="email">Email</label>
-        <input type="email" id="email" placeholder="Enter your email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+        <input type="email" id="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
       <div className="form-group">
         <label htmlFor="password">Password</label>

@@ -1,19 +1,23 @@
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-import firebase from "firebase";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import {getAuth} from 'firebase/auth'
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCcPSKlYtpdzBoAC8soeSmIARMzVKzrf5I",
-  authDomain: "challenge-4b2b2.firebaseapp.com",
-  databaseURL: "https://challenge-4b2b2.firebaseio.com",
-  projectId: "challenge-4b2b2",
-  storageBucket: "challenge-4b2b2.appspot.com",
-  messagingSenderId: "962418448875",
-  appId: "1:962418448875:web:f6cce5eeaf819481f661ae",
+  apiKey: "AIzaSyBGuF_SXeGI5w-f2ztvKLZsn3YpqKlzAv0",
+  authDomain: "clone-3bd16.firebaseapp.com",
+  projectId: "clone-3bd16",
+  storageBucket: "clone-3bd16.appspot.com",
+  messagingSenderId: "497669772559",
+  appId: "1:497669772559:web:cbf42c188af05730605a7a",
+  measurementId: "G-HX2LGC5YM8"
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth=getAuth(app)
 
-const db = firebaseApp.firestore();
-const auth = firebase.auth();
-
-export { db, auth };
+export { auth };
