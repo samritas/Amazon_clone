@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from "react-router-dom";
 import { useStateValue } from './StateProvider'
 import CheckoutProduct from './CheckoutProduct';
 import CurrencyFormat from 'react-currency-format';
@@ -7,9 +7,15 @@ import { useStripe,useElements } from '@stripe/react-stripe-js';
 import axios from './axios'
 import './Payment.css'
 import { CardElement } from '@stripe/react-stripe-js';
+import { db } from './firebase';
+// import { useHistory } from 'react-router-dom';
 
 function Payment() {
+    // const history = useHistory();
+    const navigate=useNavigate()
 
+    const stripe = useStripe();
+    const elements = useElements();
     
     const getBasketTotal = (basket) => 
   basket?.reduce((amount, item) => item.price + amount, 0);
@@ -35,13 +41,44 @@ function Payment() {
 
         getClientSecret();
     }, [basket])
+    console.log("basket",basket)
 
     console.log('THE SECRET IS >>>', clientSecret)
-    console.log('👱', user)
-
-    const handleSubmit=event=>{
+  
+    const handleSubmit = async (event) => {
+        
         event.preventDefault();
-        setProcessing('true')
+        setProcessing(true);
+
+        const payload = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: elements.getElement(CardElement)
+            }
+        }).then(({ paymentIntent }) => {
+
+            db
+              .collection('users')
+              .doc(user?.uid)
+              .collection('orders')
+              .doc(paymentIntent.id)
+              .set({
+                  basket: basket,
+                  amount: paymentIntent.amount,
+                  created: paymentIntent.created
+              })
+        
+
+            setSucceeded(true);
+            setError(null)
+            setProcessing(false)
+
+            dispatch({
+                type: 'EMPTY_BASKET'
+            })
+
+           navigate("/orders")
+        })
+
     }
     const handleChange=event=>{
         setDisabled(event.empty)
