@@ -40,9 +40,12 @@ function App() {
         }, []);
 
   return (
+    
     <Router>
+
         <>
         <Routes>
+          
             <Route path="/" element={<><Header/><Home/></>}/>
             <Route path="/checkout" element={<><Header/><Checkout/></>}/>
             <Route path="/login" element={<Login/>}/>
