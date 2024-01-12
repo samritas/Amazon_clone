@@ -1,5 +1,5 @@
 import axios from 'axios'
 const instance=axios.create({
-    baseURL:' http://127.0.0.1:5001/clone-3bd16/us-central1/api'
+    baseURL:'https://backend-samritas.onrender.com/'
 })
 export default instance;

@@ -41,7 +41,7 @@ function App() {
 
   return (
     
-    <Router>
+    <Router  basename="/amazon_clone">
 
         <>
         <Routes>
